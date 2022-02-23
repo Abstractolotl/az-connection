@@ -1,6 +1,11 @@
 build
-.idea
 
 .gradle
 **/build/
 !src/**/build/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
