@@ -1,5 +1,6 @@
 package de.az.ware.connection.websocket;
 
+import de.az.ware.connection.Connection;
 import de.az.ware.connection.ConnectionListener;
 import de.az.ware.connection.ConnectionProvider;
 import org.java_websocket.handshake.ServerHandshake;
@@ -7,7 +8,7 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class WebSocketClient implements ConnectionProvider {
+public class WebSocketClient implements ConnectionProvider, Connection {
 
     private ConnectionListener listener;
 
@@ -30,17 +31,17 @@ public class WebSocketClient implements ConnectionProvider {
         client = new org.java_websocket.client.WebSocketClient(uri) {
             @Override
             public void onOpen(ServerHandshake handshakedata) {
-                listener.onConnected(null);
+                listener.onConnected(WebSocketClient.this);
             }
 
             @Override
             public void onMessage(String message) {
-                listener.onMessage(null, message);
+                listener.onMessage(WebSocketClient.this, message);
             }
 
             @Override
             public void onClose(int code, String reason, boolean remote) {
-                listener.onDisconnected(null);
+                listener.onDisconnected(WebSocketClient.this);
             }
 
             @Override
@@ -48,10 +49,21 @@ public class WebSocketClient implements ConnectionProvider {
 
             }
         };
+
+    }
+
+    public void connect(){
+        client.connect();
     }
 
     @Override
     public void setConnectionListener(ConnectionListener listener) {
         this.listener = listener;
     }
+
+    @Override
+    public void sendMessage(String message) {
+        if(client.isOpen()) client.send(message);
+    }
+
 }
