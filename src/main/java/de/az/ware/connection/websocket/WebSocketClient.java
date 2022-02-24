@@ -53,7 +53,11 @@ public class WebSocketClient implements ConnectionProvider, Connection {
     }
 
     public void connect(){
-        client.connect();
+        try {
+            client.connectBlocking();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

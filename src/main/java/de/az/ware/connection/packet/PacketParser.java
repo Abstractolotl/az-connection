@@ -10,12 +10,21 @@ import java.util.HashMap;
  */
 public class PacketParser {
 
+    private static final Gson gson = new Gson();
+    public static String SerializePacket(Packet packet){
+        var obj = gson.toJsonTree(packet).getAsJsonObject();
+        if(obj.has("type")) {
+            System.err.println("Tried Serializing Packet with property TYPE: " + obj.get("type").getAsString());
+            obj.remove("type");
+        }
+        obj.addProperty("type", packet.getClass().getName());
+        return gson.toJson(obj);
+    }
+
     private final HashMap<String, Class<?>> packetClasses;
-    private final Gson gson;
 
     public PacketParser(){
         packetClasses = new HashMap<>();
-        gson = new Gson();
     }
     public void registerPacketClass(Class<? extends Packet> c){
         System.out.println("Calling Consumer with: " + c);
