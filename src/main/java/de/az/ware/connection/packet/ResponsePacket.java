@@ -2,7 +2,7 @@ package de.az.ware.connection.packet;
 
 import java.util.UUID;
 
-public class ResponsePacket {
+public class ResponsePacket implements Packet {
 
     private UUID responseID;
 
