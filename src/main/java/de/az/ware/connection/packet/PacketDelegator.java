@@ -20,6 +20,11 @@ public class PacketDelegator<T> {
     private final HashMap<String, Method> packetHandleMethods;
     private Method defaultHandler;
 
+    /**
+     * @param clazz
+     * @param handler
+     * @param parser if provided registers packets classes to parser
+     */
     public PacketDelegator(Class<T> clazz, PacketHandler handler, PacketParser parser) {
         if(clazz == null) throw new IllegalArgumentException("Class cannot be null.");
         if(handler == null) throw new IllegalArgumentException("PacketHandler cannot be null.");

@@ -70,4 +70,9 @@ public class WebSocketClient implements ConnectionProvider, Connection {
         if(client.isOpen()) client.send(message);
     }
 
+    @Override
+    public void close() {
+        client.close();
+    }
+
 }

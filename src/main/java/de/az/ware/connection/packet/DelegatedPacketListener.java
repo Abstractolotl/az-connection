@@ -4,6 +4,11 @@ public class DelegatedPacketListener<T> implements PacketListener<T> {
 
     private final PacketDelegator<T> delegator;
 
+    /**
+     * @param clazz
+     * @param parser if provided registers packets classes to parser
+     * @param handler
+     */
     public DelegatedPacketListener(Class<T> clazz, PacketParser parser, PacketHandler handler) {
         delegator = new PacketDelegator<>(clazz, handler, parser);
     }

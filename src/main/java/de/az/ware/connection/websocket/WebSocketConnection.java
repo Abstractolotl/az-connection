@@ -20,4 +20,9 @@ public class WebSocketConnection implements Connection {
         if(!socket.isClosing()) socket.send(message);
     }
 
+    @Override
+    public void close() {
+        socket.close();
+    }
+
 }
